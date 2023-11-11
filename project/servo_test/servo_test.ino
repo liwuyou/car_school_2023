@@ -20,19 +20,20 @@ void setup()
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~华丽的分割线 ~~~~~~~~~~~~~~~~~~~~~~~~~~ */ 
 void loop() 
 { 
-  myservo.write(0); // 复位
-  for(pos = 50; pos < 130; pos += 1)  // 从50度到130度运动 
-  {                                                     // 每次步进一度
-    myservo.write(pos);        // 指定舵机转向的角度
-    delay(15);                       // 等待15ms让舵机到达指定位置
+  //myservo.write(0); // 复位
+  // for(pos = 50; pos < 130; pos += 1)  // 从50度到130度运动 
+  // {                                                     // 每次步进一度
+  //   myservo.write(pos);        // 指定舵机转向的角度
+  //   delay(15);                       // 等待15ms让舵机到达指定位置
     
-  } 
-  for(pos = 130; pos>=50; pos-=1)   //从130度到50度运动  
-  {                                
-    myservo.write(pos);         // 指定舵机转向的角度 
-    delay(15);                        // 等待15ms让舵机到达指定位置 
-    Serial.println(myservo.read());
-  } 
+  // } 
+  // for(pos = 130; pos>=50; pos-=1)   //从130度到50度运动  
+  // {                                
+  //   myservo.write(pos);         // 指定舵机转向的角度 
+  //   delay(15);                        // 等待15ms让舵机到达指定位置 
+  //   Serial.println(myservo.read());
+  // } 
+  myservo.write(90);
 
 
 }

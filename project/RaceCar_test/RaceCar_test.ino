@@ -1,15 +1,15 @@
 #include <Servo.h> 
 Servo myservo;  //创建一个舵机控制对象
 
-int pos = 75;    // 该变量用与存储舵机中值的角度位置,各个车的不一样
+int pos = 90;    // 该变量用与存储舵机中值的角度位置,各个车的不一样
 int lift = 40;   //舵机打角限幅
 int right = 100;
 
 // 舵机PWM引脚9，左电机PWM引脚5,右电机PWM引脚6；
 int servo = 9;  int motor1=5;  int motor2=6;
 
-// 红外对管左->右引脚为2,4,7,8
-int infrared[7]={2,4,7,3,8,12,13};
+// 红外对管左->右引脚为2,4,7,8,12
+int infrared[5]={2,4,7,8,12};
 
 float err,last_err;   //pid 参数定义
 
@@ -31,14 +31,12 @@ void setup(){
   pinMode(infrared[2],INPUT_PULLUP);
   pinMode(infrared[3],INPUT_PULLUP);
   pinMode(infrared[4],INPUT_PULLUP);
-  pinMode(infrared[5],INPUT_PULLUP);
-  pinMode(infrared[6],INPUT_PULLUP);
 
   myservo.write(pos);
 
   //初始速度
-  analogWrite(motor1,90);
-  analogWrite(motor2,90);
+  analogWrite(motor1,255);
+  analogWrite(motor2,250);
 }
 
 void loop(){
@@ -53,34 +51,27 @@ void sensor(){
   int a_3 = digitalRead(infrared[2]);
   int a_4 = digitalRead(infrared[3]);
   int a_5 = digitalRead(infrared[4]);
-  int a_6 = digitalRead(infrared[5]);
-  int a_7 = digitalRead(infrared[6]); 
-  if(a_1==white && a_2==white && a_3==white && a_4==black && a_5==white && a_6==white && a_7 ==white){
-      err = 0;
-  }
-  else if(a_1==white && a_2==white && a_3==black && a_4==white && a_5==white && a_6==white && a_7 ==white){
-      err = -1;
-  }
-  else if(a_1==white && a_2==black && a_3==white && a_4==white && a_5==white && a_6==white && a_7 ==white){
+  if(a_1==black && a_2==white && a_3==white && a_4==white && a_5==white){
       err = -2;
   }
-  else if(a_1==black && a_2==white && a_3==white && a_4==white && a_5==white && a_6==white && a_7 ==white){
-      err = -3;
+  else if(a_1==white && a_2==black && a_3==white && a_4==white && a_5==white){
+      err = -1;
   }
-  else if(a_1==white && a_2==white && a_3==white && a_4==white && a_5==black && a_6==white && a_7 ==white){
+  else if(a_1==white && a_2==white && a_3==black && a_4==white && a_5==white){
+      err = 0;
+  }
+  else if(a_1==white && a_2==white && a_3==white && a_4==black && a_5==white){
       err = 1;
-  }
-  else if(a_1==white && a_2==white && a_3==white && a_4==white && a_5==white && a_6==black && a_7 ==white){
+  } 
+  else if(a_1==white && a_2==white && a_3==white && a_4==white && a_5==black){
       err = 2;
   }
-  else if(a_1==white && a_2==white && a_3==white && a_4==white && a_5==white && a_6==white && a_7 ==black){
-      err = 3;
-  }  
+
 }
 
 int pid(){
   int output;
-  float kp=10,ki=0.001,kd=0;
+  float kp=17,ki=0.001,kd=0;
   float P,I,D;
   P = err;
   I += err;
